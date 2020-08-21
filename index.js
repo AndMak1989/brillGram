@@ -16,7 +16,7 @@ const accounts = [
 
 
 (async function example() {
-    let driver = await new Builder().forBrowser('firefox').build();
+    let driver = await new Builder().forBrowser('chrome').build();
 
     for await (let account_item of accounts) {
 
