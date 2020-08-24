@@ -21,7 +21,7 @@ const accounts = [
     //'elena.vasylkova_official',
 ];
 (async () => {
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
     const page = await browser.newPage();
 
     for await (let account_item of accounts) {
@@ -39,7 +39,9 @@ const accounts = [
 
             await page.waitForSelector('#fb-root');
 
-            const sharedData = await page.evaluate(() => { return window._sharedData });
+            const sharedData = await page.evaluate(() => {
+                return window._sharedData
+            });
 
             const mediasObject = sharedData['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'];
 
@@ -72,7 +74,7 @@ const accounts = [
 
 async function insertMediaData(accountName, medias) {
     //pool.execute("INSERT INTO account_content SET age=age+1 WHERE name=?", ["Stan"])
-    const  mediasSerialized = JSON.stringify(medias);
+    const mediasSerialized = JSON.stringify(medias);
 
     await pool.execute("UPDATE account_table SET account_table.account_content=? WHERE account_table.account_name = ? ", [mediasSerialized, accountName]) // изменение объектов
         .catch(function (err) {
