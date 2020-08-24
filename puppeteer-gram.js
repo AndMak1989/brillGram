@@ -21,7 +21,7 @@ const accounts = [
     //'elena.vasylkova_official',
 ];
 (async () => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({headless: true});
     const page = await browser.newPage();
 
     for await (let account_item of accounts) {
