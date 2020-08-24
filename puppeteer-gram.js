@@ -133,7 +133,7 @@ async function insertMediaData(accountName, medias) {
 
     await pool.execute("UPDATE account_table SET account_table.account_content=? WHERE account_table.account_name = ? ", [mediasSerialized, accountName]) // изменение объектов
         .catch(function (err) {
-            console.warn(e.message);
+            console.warn(err.message);
             fs.writeFileSync("error-log.txt", err.message)
         });
 }
