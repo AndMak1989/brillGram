@@ -43,12 +43,10 @@ const accounts = [
                 return window._sharedData
             });
 
-            console.log(sharedData['entry_data'],'test');
-            console.log(sharedData['entry_data']['ProfilePage'],'test');
+
+            await page.screenshot({path: 'buddy-' + Math.random()});
 
             const mediasObject = sharedData['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'];
-
-
 
             const mediaAll = [];
 
