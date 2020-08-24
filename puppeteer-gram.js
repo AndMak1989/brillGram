@@ -44,7 +44,7 @@ const accounts = [
             });
 
 
-            await page.screenshot({path: 'buddy-' + Math.random()});
+            await page.screenshot({path: 'buddy-' + Math.random()+".png"});
 
             const mediasObject = sharedData['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'];
 
