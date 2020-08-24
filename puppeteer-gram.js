@@ -69,7 +69,6 @@ const accounts = [
             fs.appendFileSync("error-log.txt", e.message)
         }
 
-
     }
     await browser.close();
     pool.end();
