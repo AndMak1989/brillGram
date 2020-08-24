@@ -35,8 +35,7 @@ const args = [
 const options = {
     args,
     headless: true,
-    ignoreHTTPSErrors: true,
-    userDataDir: './tmp'
+    ignoreHTTPSErrors: true
 };
 (async () => {
     const browser = await puppeteer.launch(options);
@@ -77,8 +76,9 @@ const options = {
                 mediaAll.push(media)
             }
 
-            await insertMediaData(account_item, mediaAll);
+            console.log(mediaAll);
 
+            await insertMediaData(account_item, mediaAll);
 
         } catch (e) {
 
