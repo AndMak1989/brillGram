@@ -43,11 +43,11 @@ const accounts = [
                 return window._sharedData
             });
 
-            console.log(sharedData);
+            console.log(sharedData,'test');
 
             const mediasObject = sharedData['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'];
 
-            console.log(mediasObject);
+
 
             const mediaAll = [];
 
@@ -60,7 +60,6 @@ const accounts = [
                 mediaAll.push(media)
             }
 
-            console.log(mediaAll);
             await insertMediaData(account_item, mediaAll);
 
 
