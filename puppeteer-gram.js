@@ -79,7 +79,7 @@ const options = {
             console.log(mediaAll);
 
             await insertMediaData(account_item, mediaAll);
-
+            
         } catch (e) {
 
             console.warn(e.message);
