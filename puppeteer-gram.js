@@ -20,10 +20,28 @@ const accounts = [
     'luce_sposa',
     //'elena.vasylkova_official',
 ];
-(async () => {
-    const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
-    const page = await browser.newPage();
+const preloadFile = fs.readFileSync('./preload.js', 'utf8');
 
+const args = [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-infobars',
+    '--window-position=0,0',
+    '--ignore-certifcate-errors',
+    '--ignore-certifcate-errors-spki-list',
+    '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'
+];
+
+const options = {
+    args,
+    headless: true,
+    ignoreHTTPSErrors: true,
+    userDataDir: './tmp'
+};
+(async () => {
+    const browser = await puppeteer.launch(options);
+    const page = await browser.newPage();
+    await page.evaluateOnNewDocument(preloadFile);
     for await (let account_item of accounts) {
 
         try {
