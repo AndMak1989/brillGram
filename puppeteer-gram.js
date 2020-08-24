@@ -34,16 +34,53 @@ const args = [
 
 const options = {
     args,
-    headless: true,
+    headless: false,
     ignoreHTTPSErrors: true
 };
 (async () => {
     const browser = await puppeteer.launch(options);
+
     const page = await browser.newPage();
+
     await page.evaluateOnNewDocument(preloadFile);
+
+    await page.goto('https://www.instagram.com/accounts/login/', {waitUntil: 'networkidle2'});
+
+    await page.type('[name="username"]', `u.food_9708`);
+
+    await page.type('[name="password"]', `Qqwerty2121`);
+
+    await page.keyboard.press(String.fromCharCode(13));
+
+    await page.waitForSelector('#react-root');
+
+    await page.keyboard.press(String.fromCharCode(13));
+    // await page.evaluate(() => {
+    //     const rest = document.querySelector("button");
+    //     console.log(rest);
+    //     rest.click()
+    // });
+    await page.waitForNavigation({waitUntil: 'networkidle0'});
+    await page.keyboard.press("Tab");
+
+    await page.keyboard.press(String.fromCharCode(13));
+
+    await page.waitForNavigation({waitUntil: 'networkidle0'});
+    await page.keyboard.press("Tab");
+
+    await page.keyboard.press(String.fromCharCode(13));
+    await page.screenshot({path: 'insta-' + Math.random() + ".png"});
+    // await browser.close();
+
+    await page.waitForSelector('#react-root');
+
+
+    ////////////////////////////////////////////////////////////////
     for await (let account_item of accounts) {
 
         try {
+            ////////////////////////////////////////////
+
             await page.goto('http://www.google.com/', {waitUntil: 'networkidle2'});
 
             await page.type('[name="q"]', `instagram ${account_item}`);
@@ -53,15 +90,14 @@ const options = {
             await page.waitForSelector('#search');
 
             await page.click('#search a');
-
-            await page.waitForSelector('#fb-root');
+            await page.waitForNavigation({waitUntil: 'networkidle0'});
 
             const sharedData = await page.evaluate(() => {
                 return window._sharedData
             });
 
 
-            await page.screenshot({path: 'buddy-' + Math.random()+".png"});
+            await page.screenshot({path: 'buddy-' + Math.random() + ".png"});
 
             const mediasObject = sharedData['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'];
 
@@ -79,7 +115,7 @@ const options = {
             console.log(mediaAll);
 
             await insertMediaData(account_item, mediaAll);
-            
+
         } catch (e) {
 
             console.warn(e.message);
