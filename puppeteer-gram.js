@@ -1,24 +1,23 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const mysql = require('mysql2');
-// const pool = mysql.createPool({
-//     connectionLimit: 10,
-//     host: "bri.mysql.tools",
-//     user: "bri_brillgram",
-//     database: "bri_brillgram",
-//     password: "P2pYxvC36g4P"
-// }).promise();
+const moment = require('moment');
+
+
+const format = "YYYY-MM-DD HH:mm:ss";
+
+
 const pool = mysql.createPool({
     connectionLimit: 10,
-    host: "localhost",
-    user: "root",
-    database: "fake_brill_gram",
-    password: ""
+    host: "185.69.155.15",
+    user: "makand",
+    database: "brill_gram_db",
+    password: "And#rew#123#"
 }).promise();
 
 const accounts = [
     'luce_sposa',
-    //'elena.vasylkova_official',
+    'elena.vasylkova_official',
 ];
 const preloadFile = fs.readFileSync('./preload.js', 'utf8');
 
@@ -34,9 +33,10 @@ const args = [
 
 const options = {
     args,
-    headless: true,
+    headless: false,
     ignoreHTTPSErrors: true
 };
+
 (async () => {
     const browser = await puppeteer.launch(options);
 
@@ -55,22 +55,16 @@ const options = {
     await page.waitForSelector('#react-root');
 
     await page.keyboard.press(String.fromCharCode(13));
-    // await page.evaluate(() => {
-    //     const rest = document.querySelector("button");
-    //     console.log(rest);
-    //     rest.click()
-    // });
-    await page.waitForNavigation({waitUntil: 'networkidle0'});
-    await page.keyboard.press("Tab");
-
-    await page.keyboard.press(String.fromCharCode(13));
 
     await page.waitForNavigation({waitUntil: 'networkidle0'});
     await page.keyboard.press("Tab");
 
     await page.keyboard.press(String.fromCharCode(13));
-    await page.screenshot({path: 'insta-' + Math.random() + ".png"});
-    // await browser.close();
+
+    await page.waitForNavigation({waitUntil: 'networkidle0'});
+    await page.keyboard.press("Tab");
+
+    await page.keyboard.press(String.fromCharCode(13));
 
     await page.waitForSelector('#react-root');
 
@@ -96,9 +90,6 @@ const options = {
                 return window._sharedData
             });
 
-
-            await page.screenshot({path: 'buddy-' + Math.random() + ".png"});
-
             const mediasObject = sharedData['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'];
 
             const mediaAll = [];
@@ -111,29 +102,32 @@ const options = {
                 };
                 mediaAll.push(media)
             }
-
             console.log(mediaAll);
-
-            await insertMediaData(account_item, mediaAll);
+            const dateTime = moment(Date.now()).format(format);
+            await insertMediaData(account_item, mediaAll, dateTime);
 
         } catch (e) {
 
             console.warn(e.message);
-            fs.appendFileSync("error-log.txt", e.message)
+            fs.appendFileSync("error-log.txt", `\n ${e.message}`)
         }
 
     }
+    await page.close();
     await browser.close();
-    pool.end();
+    await pool.end();
+    process.kill(process.pid);
+    process.exit(0);
 })();
 
-async function insertMediaData(accountName, medias) {
+async function insertMediaData(accountName, medias, dateTime) {
     //pool.execute("INSERT INTO account_content SET age=age+1 WHERE name=?", ["Stan"])
     const mediasSerialized = JSON.stringify(medias);
 
-    await pool.execute("UPDATE account_table SET account_table.account_content=? WHERE account_table.account_name = ? ", [mediasSerialized, accountName]) // изменение объектов
+    await pool.execute("UPDATE account_table SET account_table.account_content=?, account_table.last_update = ? WHERE account_table.account_name = ? ", [mediasSerialized, dateTime, accountName]) // изменение объектов
         .catch(function (err) {
             console.warn(err.message);
-            fs.writeFileSync("error-log.txt", err.message)
+            fs.writeFileSync("error-log.txt", `\n err.message`)
         });
 }
+
