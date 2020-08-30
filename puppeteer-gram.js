@@ -62,6 +62,7 @@ const options = {
     await page.keyboard.press(String.fromCharCode(13));
 
     await page.waitForNavigation({waitUntil: 'networkidle0'});
+    
     await page.keyboard.press("Tab");
 
     await page.keyboard.press(String.fromCharCode(13));
