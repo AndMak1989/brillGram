@@ -93,7 +93,7 @@ const options = {
             const sharedData = await page.evaluate(() => {
                 return window._sharedData
             });
-
+            await page.screenshot({path: 'buddy-screenshot.png'});
             const mediasObject = sharedData['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'];
 
             const mediaAll = [];
