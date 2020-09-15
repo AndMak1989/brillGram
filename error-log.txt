@@ -1,2 +1,5 @@
 Unknown column 'account_table.last_update' in 'field list'
  Protocol error (Page.navigate): Session closed. Most likely the page has been closed.
+ waiting for selector "#search" failed: timeout 30000ms exceeded
+ waiting for selector "#search" failed: timeout 30000ms exceeded
+ waiting for selector "undefined" failed: timeout 30000ms exceeded
