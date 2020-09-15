@@ -20,6 +20,8 @@
     "moment": "^2.27.0",
     "mysql2": "^2.1.0",
     "puppeteer": "^5.2.1",
+    "puppeteer-extra": "^3.1.15",
+    "puppeteer-extra-plugin-stealth": "^2.6.1",
     "selenium-webdriver": "^4.0.0-alpha.7"
   }
 }
