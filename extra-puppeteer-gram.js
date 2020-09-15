@@ -45,33 +45,33 @@ const options = {
 
     await page.evaluateOnNewDocument(preloadFile);
 
-    await page.goto('https://www.instagram.com/accounts/login/', {waitUntil: 'networkidle2'});
-
-    await page.screenshot({path: 'last-photo.png'});
-
-    await page.type('[name="username"]', `flook_che`);
-
-    await page.type('[name="password"]', `Qqwerty2121`);
-
-    await page.keyboard.press(String.fromCharCode(13));
-
-    await page.waitForSelector('#react-root');
-
-    await page.keyboard.press(String.fromCharCode(13));
-
-    await page.waitForNavigation({waitUntil: 'networkidle0'});
-
-    await page.keyboard.press("Tab");
-
-    await page.keyboard.press(String.fromCharCode(13));
-
-    await page.waitForNavigation({waitUntil: 'networkidle0'});
-
-    await page.keyboard.press("Tab");
-
-    await page.keyboard.press(String.fromCharCode(13));
-
-    await page.waitForSelector('#react-root');
+    // await page.goto('https://www.instagram.com/accounts/login/', {waitUntil: 'networkidle2'});
+    //
+    // await page.screenshot({path: 'last-photo.png'});
+    //
+    // await page.type('[name="username"]', `flook_che`);
+    //
+    // await page.type('[name="password"]', `Qqwerty2121`);
+    //
+    // await page.keyboard.press(String.fromCharCode(13));
+    //
+    // await page.waitForSelector('#react-root');
+    //
+    // await page.keyboard.press(String.fromCharCode(13));
+    //
+    // await page.waitForNavigation({waitUntil: 'networkidle0'});
+    //
+    // await page.keyboard.press("Tab");
+    //
+    // await page.keyboard.press(String.fromCharCode(13));
+    //
+    // await page.waitForNavigation({waitUntil: 'networkidle0'});
+    //
+    // await page.keyboard.press("Tab");
+    //
+    // await page.keyboard.press(String.fromCharCode(13));
+    //
+    // await page.waitForSelector('#react-root');
 
 
     ////////////////////////////////////////////////////////////////
